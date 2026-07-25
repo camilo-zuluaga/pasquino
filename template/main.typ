@@ -1,4 +1,4 @@
-#import "../lib.typ": poster, section
+#import "@preview/pasquino:0.1.0": poster, section
 
 #show: poster.with(
   title: [Rule-based system and forward chaining for\ investigating incidents on Linux servers],
