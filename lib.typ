@@ -4,9 +4,7 @@
   "red": gradient.linear(rgb("#D9A3A3"), white, angle: 90deg),
 )
 
-#let pas-colbreak() = colbreak()
-
-#let section(title: "", body) = [
+#let section(title: none, body) = [
   = #title
   #body
 ]
@@ -18,10 +16,23 @@
   professor: "",
   logo: none,
   theme: "blue",
+  banner-height: 17%,
+  gutter: 50pt,
+  title-size: 64pt,
+  body-size: 29pt,
+  heading-size: 50pt,
+  meta-size: 30pt,
+  caption-size: 20pt,
   body,
 ) = {
+  let display = ("Libre Baskerville", "Linux Libertine", "Times New Roman")
+  let sans = ("TeX Gyre Heros", "Arial", "Liberation Sans")
+
   let header-bg = if type(theme) == str {
-    presets.at(theme, default: presets.at("blue"))
+    if theme not in presets {
+      panic("unknown theme `" + theme + "`; available: " + presets.keys().join(", "))
+    }
+    presets.at(theme)
   } else {
     theme
   }
@@ -33,28 +44,24 @@
     margin: (top: 2cm, rest: 1.5cm),
     background: place(
       top + left,
-      rect(
-        width: 100%,
-        height: 17%,
-        fill: header-bg,
-      ),
+      rect(width: 100%, height: banner-height, fill: header-bg),
     ),
   )
 
   // content style
-  set text(font: "TeX Gyre Heros", size: 29pt)
+  set text(font: sans, size: body-size)
 
   show heading.where(level: 1): it => block(
     width: 100%,
     below: .6em,
     [
-      #text(font: "Libre Baskerville", weight: 500, size: 50pt, it.body)
+      #text(font: display, weight: 500, size: heading-size, it.body)
       #v(-0.6em)
       #line(length: 100%, stroke: 2pt)
     ],
   )
 
-  show figure.caption: set text(size: 20pt)
+  show figure.caption: set text(size: caption-size)
 
   // header Block
   grid(
@@ -63,9 +70,9 @@
     align: (left + horizon, right + bottom),
 
     [
-      #text(font: "Libre Baskerville", size: 64pt, weight: 500, title)
+      #text(font: display, size: title-size, weight: 500, title)
       #v(-0.5em)
-      #text(font: "TeX Gyre Heros", size: 30pt)[
+      #text(font: sans, size: meta-size)[
         #authors.join(", ") \
         Course: #course \
         Prof. #professor
@@ -73,11 +80,7 @@
     ],
 
     if logo != none {
-      if type(logo) == str {
-        image(logo, width: 18cm)
-      } else {
-        logo
-      }
+      if type(logo) == str { image(logo, width: 18cm) } else { logo }
     },
   )
 
@@ -85,5 +88,5 @@
   line(length: 100%, stroke: 2pt)
   v(.2em)
 
-  columns(2, gutter: 50pt, body)
+  columns(2, gutter: gutter, body)
 }
