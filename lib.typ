@@ -1,0 +1,53 @@
+#let poster(
+  title: "",
+  authors: (),
+  course: "",
+  professor: "",
+  body,
+) = {
+  // page config
+  set page(
+    width: 75cm,
+    height: 100cm,
+    margin: (top: 2cm, rest: 1.5cm),
+    background: place(
+      top + left,
+      rect(
+        width: 100%,
+        height: 17%,
+        fill: gradient.linear(rgb("#C9EBFF"), white, angle: 90deg),
+      ),
+    ),
+  )
+
+  // content style
+  set text(font: "TeX Gyre Heros", size: 29pt)
+
+  show heading.where(level: 1): it => block(
+    width: 100%,
+    below: .6em,
+    [
+      #text(font: "Libre Baskerville", weight: 500, size: 50pt, it.body)
+      #v(-0.6em)
+      #line(length: 100%, stroke: 2pt)
+    ],
+  )
+
+  show figure.caption: set text(size: 20pt)
+
+  // Header Block
+  text(font: "Libre Baskerville", size: 64pt, weight: 500, title)
+  v(-0.5em)
+
+  text(font: "TeX Gyre Heros", size: 30pt)[
+    #authors.join(", ") \
+    Course: #course \
+    Prof. #professor
+  ]
+
+  v(0.2em)
+  line(length: 100%, stroke: 2pt)
+  v(.2em)
+
+  body
+}
