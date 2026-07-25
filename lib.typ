@@ -80,9 +80,7 @@
       lines.join(linebreak())
     },
 
-    if logo != none {
-      if type(logo) == str { image(logo, width: 18cm) } else { logo }
-    },
+    if logo != none { logo },
   )
 
   v(0.2em)
