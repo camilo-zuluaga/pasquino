@@ -1,3 +1,9 @@
+#let presets = (
+  "blue": gradient.linear(rgb("#C9EBFF"), white, angle: 90deg),
+  "green": gradient.linear(rgb("#A3D9A3"), white, angle: 90deg),
+  "red": gradient.linear(rgb("#D9A3A3"), white, angle: 90deg),
+)
+
 #let pas-colbreak() = colbreak()
 
 #let section(title: "", body) = [
@@ -11,8 +17,15 @@
   course: "",
   professor: "",
   logo: none,
+  theme: "blue",
   body,
 ) = {
+  let header-bg = if type(theme) == str {
+    presets.at(theme, default: presets.at("blue"))
+  } else {
+    theme
+  }
+
   // page config
   set page(
     width: 75cm,
@@ -23,7 +36,7 @@
       rect(
         width: 100%,
         height: 17%,
-        fill: gradient.linear(rgb("#C9EBFF"), white, angle: 90deg),
+        fill: header-bg,
       ),
     ),
   )
@@ -54,7 +67,7 @@
       #v(-0.5em)
       #text(font: "TeX Gyre Heros", size: 30pt)[
         #authors.join(", ") \
-        course: #course \
+        Course: #course \
         Prof. #professor
       ]
     ],
