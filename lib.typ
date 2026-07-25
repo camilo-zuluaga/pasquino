@@ -1,3 +1,10 @@
+#let section(title: "", body) = [
+  = #title
+  #body
+]
+
+#let pas-colbreak() = colbreak()
+
 #let poster(
   title: "",
   authors: (),
@@ -35,7 +42,7 @@
 
   show figure.caption: set text(size: 20pt)
 
-  // Header Block
+  // header Block
   text(font: "Libre Baskerville", size: 64pt, weight: 500, title)
   v(-0.5em)
 
@@ -49,5 +56,5 @@
   line(length: 100%, stroke: 2pt)
   v(.2em)
 
-  body
+  columns(2, gutter: 50pt, body)
 }
