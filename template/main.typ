@@ -1,11 +1,12 @@
-#import "@local/pasquino:0.1.0": pas-colbreak, poster, section
+#import "../lib.typ": poster, section
 
 #show: poster.with(
   title: [Rule-based system and forward chaining for\ investigating incidents on Linux servers],
   authors: ("Kevin T. Oloughlin", "Paula R. Hoff"),
-  course: "Expert Systems",
-  professor: "Leo T. Garcia",
-  logo: image("images/logo_uniminuto.png"),
+  info: (
+    [Course: Expert Systems 2026],
+    [Prof. Leo T. Garcia],
+  ),
   theme: "blue",
 )
 
@@ -17,9 +18,9 @@
 ]
 
 #section(title: "Objectives")[
-  1. #lorem(30)
-  2. #lorem(30)
-  3. #lorem(30)
+  + #lorem(30)
+  + #lorem(30)
+  + #lorem(30)
 ]
 
 #section(title: "Methodology")[
@@ -38,7 +39,7 @@
   - Buchanan, B. G., & Shortliffe, E. H. (1984). Rule-Based Expert Systems.
 ]
 
-#pas-colbreak()
+#colbreak()
 
 // Right Column Content
 #section(title: "Design")[
