@@ -8,7 +8,6 @@ description = "Academic conference posters with themed gradients."
 repository = "https://github.com/camilo-zuluaga/pasquino"
 keywords = ["poster", "academic", "research", "presentation", "conference"]
 categories = ["poster", "layout"]
-exclude = ["assets/", "preview.png"]
 
 [template]
 path = "template"
