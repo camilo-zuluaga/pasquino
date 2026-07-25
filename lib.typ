@@ -73,7 +73,11 @@
     ],
 
     if logo != none {
-      image(logo, width: 18cm)
+      if type(logo) == str {
+        image(logo, width: 18cm)
+      } else {
+        logo
+      }
     },
   )
 
