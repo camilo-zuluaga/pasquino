@@ -10,6 +10,7 @@
   authors: (),
   course: "",
   professor: "",
+  logo: none,
   body,
 ) = {
   // page config
@@ -43,14 +44,25 @@
   show figure.caption: set text(size: 20pt)
 
   // header Block
-  text(font: "Libre Baskerville", size: 64pt, weight: 500, title)
-  v(-0.5em)
+  grid(
+    columns: (1fr, auto),
+    gutter: 2cm,
+    align: (left + horizon, right + bottom),
 
-  text(font: "TeX Gyre Heros", size: 30pt)[
-    #authors.join(", ") \
-    Course: #course \
-    Prof. #professor
-  ]
+    [
+      #text(font: "Libre Baskerville", size: 64pt, weight: 500, title)
+      #v(-0.5em)
+      #text(font: "TeX Gyre Heros", size: 30pt)[
+        #authors.join(", ") \
+        Asignatura: #course \
+        Prof. #professor
+      ]
+    ],
+
+    if logo != none {
+      image(logo, width: 18cm)
+    },
+  )
 
   v(0.2em)
   line(length: 100%, stroke: 2pt)
