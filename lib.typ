@@ -10,8 +10,9 @@
 ]
 
 #let poster(
-  title: "",
+  title: [Poster Title],
   authors: (),
+  info: (),
   course: "",
   professor: "",
   logo: none,
@@ -69,15 +70,15 @@
     gutter: 2cm,
     align: (left + horizon, right + bottom),
 
-    [
-      #text(font: display, size: title-size, weight: 500, title)
-      #v(-0.5em)
-      #text(font: sans, size: meta-size)[
-        #authors.join(", ") \
-        Course: #course \
-        Prof. #professor
-      ]
-    ],
+    {
+      text(font: display, size: title-size, weight: 500, title)
+      v(-0.5em)
+      set text(font: sans, size: meta-size)
+      let lines = ()
+      if authors.len() > 0 { lines.push(authors.join(", ")) }
+      lines += info
+      lines.join(linebreak())
+    },
 
     if logo != none {
       if type(logo) == str { image(logo, width: 18cm) } else { logo }
