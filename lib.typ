@@ -1,9 +1,9 @@
+#let pas-colbreak() = colbreak()
+
 #let section(title: "", body) = [
   = #title
   #body
 ]
-
-#let pas-colbreak() = colbreak()
 
 #let poster(
   title: "",
@@ -54,7 +54,7 @@
       #v(-0.5em)
       #text(font: "TeX Gyre Heros", size: 30pt)[
         #authors.join(", ") \
-        Asignatura: #course \
+        course: #course \
         Prof. #professor
       ]
     ],
