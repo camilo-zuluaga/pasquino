@@ -1,46 +1,49 @@
 # Pasquino (Poster Template)
 
-A clean, modern, two-column academic research poster template designed for Typst (75x100 cm). Optimized for university project presentations, research showcases, and conference poster sessions.
+A clean, modern, two-column academic research poster template for Typst (75 × 100 cm). Built for university project presentations, research showcases and conference poster sessions.
 
-![Poster Preview](thumbnail.png)
+![Poster preview](preview.png)
 
 ---
 
 ## Features
 
-- **Standard Poster Dimensions:** Pre-configured for standard 75 cm × 100 cm poster prints.
-- **2-Column Responsive Layout:** Built using native column flow with intuitive column-breaking support.
-- **Built-in Color Themes:** Easily switch between preset header color gradients (`"blue"`, `"green"`, `"red"`, `"purple"`, `"orange"`) or supply your own custom gradient/color.
-- **Flexible Header:** Automatically aligns title, author information, course/professor details, and an optional university or institutional logo.
-- **Semantic Components:** Concise `#section(title: "...")[content]` blocks for clean, readable markup.
+- **Standard poster dimensions:** pre-configured for 75 cm × 100 cm prints.
+- **Two-column layout:** native column flow, with the built-in `#colbreak()` to start the next column.
+- **Built-in colour themes:** switch between preset header gradients (`"blue"`, `"green"`, `"red"`) or supply your own gradient or colour.
+- **Flexible header:** aligns title, authors, free-form information lines and an optional institutional logo.
+- **Semantic components:** concise `#section(title: "...")[content]` blocks for readable markup.
+- **Adjustable type scale:** every font size in the layout is a parameter.
 
 ---
 
-## Quick Start
+## Quick start
 
 ### Using the Typst CLI
 
-Initialize a new project directly from Typst Universe:
+Initialize a new project from Typst Universe:
 
 ~~~bash
-typst init @preview/uniminuto-poster:0.1.0 my-poster
+typst init @preview/pasquino:0.1.0 my-poster
 cd my-poster
 typst watch main.typ
 ~~~
 
-### Manual Import
+### Manual import
 
-If you already have a Typst document, import the package directly at the top of your `.typ` file:
+If you already have a Typst document, import the package at the top of your `.typ` file:
 
 ~~~typst
-#import "@preview/uniminuto-poster:0.1.0": poster, section, pos-colbreak
+#import "@preview/pasquino:0.1.0": poster, section
 
 #show: poster.with(
   title: [Rule-based system and forward chaining for\ investigating incidents on Linux servers],
-  authors: ("Santiago Vergara de Los Rios", "Juan Camilo Zuluaga"),
-  course: "Sistemas Expertos 2026-1",
-  professor: "Luis Fernando Londoño",
-  logo: "logo.png",
+  authors: ("Kevin T. Oloughlin", "Paula R. Hoff"),
+  info: (
+    [Course: Expert Systems 2026],
+    [Prof. Leo T. Garcia],
+  ),
+  logo: image("logo.png", width: 18cm),
   theme: "green",
 )
 
@@ -48,7 +51,7 @@ If you already have a Typst document, import the package directly at the top of 
   Your text and figures go here.
 ]
 
-#pos-colbreak()
+#colbreak()
 
 #section(title: "Results")[
   Content for the right column.
@@ -57,37 +60,87 @@ If you already have a Typst document, import the package directly at the top of 
 
 ---
 
-## Configuration & Parameters
+## Configuration & parameters
 
-### `poster(...)` Options
+### `poster(...)`
+
+Applied with a show rule. Every argument is optional.
 
 | Parameter | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `title` | `content` / `str` | `""` | Main title of the poster. Can include line breaks (`\`). |
-| `authors` | `array` of `str` | `()` | List of author names (automatically joined with commas). |
-| `course` | `str` | `""` | Course name or project context (e.g., `"Sistemas Expertos 2026-1"`). |
-| `professor` | `str` | `""` | Advisor or professor name. |
-| `logo` | `str` / `image` / `none` | `none` | Path to logo image file or an `image(...)` element. |
-| `theme` | `str` / `color` / `gradient` | `"blue"` | Preset name (`"blue"`, `"green"`, `"red"`, `"purple"`, `"orange"`) or custom gradient. |
+| `title` | `content` / `str` | `""` | Main title. Use `\` for line breaks. |
+| `authors` | `array` of `str` | `()` | Author names, joined with commas onto one line. |
+| `info` | `array` of `content` | `()` | Further header lines, printed one per line below the authors. |
+| `logo` | `content` / `none` | `none` | An `image(...)` element. Pass `image(...)` rather than a path string, so the path resolves relative to your document. |
+| `theme` | `str` / `color` / `gradient` | `"blue"` | Preset name (`"blue"`, `"green"`, `"red"`) or a custom gradient. |
+| `banner-height` | `relative` | `17%` | Height of the coloured header band. |
+| `gutter` | `length` | `50pt` | Space between the two columns. |
+| `title-size` | `length` | `64pt` | Poster title. |
+| `heading-size` | `length` | `50pt` | Section headings. |
+| `body-size` | `length` | `29pt` | Body text. |
+| `meta-size` | `length` | `30pt` | Authors and information lines. |
+| `caption-size` | `length` | `20pt` | Figure captions. |
+
+An unknown theme name raises an error listing the valid ones.
+
+### `section(...)`
+
+~~~typst
+#section(title: "Methodology")[
+  Content of the section.
+]
+~~~
+
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `title` | `content` / `str` | `none` | Heading shown above the content. |
+
+### `presets`
+
+The dictionary of built-in gradients, exported so you can inspect or reuse them:
+
+~~~typst
+#import "@preview/pasquino:0.1.0": presets
+#presets.keys()
+~~~
 
 ---
 
-## Customizing Color Themes
+## Header information lines
 
-### Built-in Presets
-You can pass a string identifier to the `theme` parameter:
+`info` takes a list of complete lines, so punctuation and labels are entirely yours, useful when they differ from line to line or aren't in English:
+
 ~~~typst
 #show: poster.with(
-  ...
-  theme: "red", // Built-in preset
+  authors: ("Ada Lovelace", "Alan Turing"),
+  info: (
+    [Asignatura: Sistemas Expertos],
+    [Prof. Fernando],
+    [*Grupo 4*],
+  ),
 )
 ~~~
 
-### Custom Linear or Radial Gradients
-Pass any standard Typst gradient directly to `theme`:
+---
+
+## Customizing colour themes
+
+### Built-in presets
+
+Pass a preset name to `theme`:
+
 ~~~typst
 #show: poster.with(
-  ...
+  theme: "red",
+)
+~~~
+
+### Custom gradients
+
+Pass any Typst gradient directly:
+
+~~~typst
+#show: poster.with(
   theme: gradient.linear(rgb("#11998e"), rgb("#38ef7d"), angle: 45deg),
 )
 ~~~
@@ -96,4 +149,4 @@ Pass any standard Typst gradient directly to `theme`:
 
 ## License
 
-This template is released under the [MIT License](LICENSE).
+Released under the [MIT No Attribution](LICENSE) license, so posters you build with this template carry no attribution requirement.
