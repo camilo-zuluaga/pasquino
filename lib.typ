@@ -13,8 +13,6 @@
   title: [Poster Title],
   authors: (),
   info: (),
-  course: "",
-  professor: "",
   logo: none,
   theme: "blue",
   banner-height: 17%,
